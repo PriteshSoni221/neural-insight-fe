@@ -1,6 +1,6 @@
 {
-  "name": "spike",
-  "version": "3.0.0",
+  "name": "neural-insight",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
