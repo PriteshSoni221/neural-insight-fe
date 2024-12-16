@@ -71,6 +71,6 @@ export const navItems: NavItem[] = [
     displayName: 'Insight Page',
     iconName: 'aperture',
     bgcolor: 'error',
-    route: '/extra/sample-page',
+    route: '/extra/insight-page',
   },
 ];
