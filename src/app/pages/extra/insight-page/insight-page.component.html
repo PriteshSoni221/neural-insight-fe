@@ -19,5 +19,8 @@
             <mat-card-title class="title">Summary</mat-card-title>
             <div>{{summary}}</div>
         </mat-card-content>
+        <div class="col-lg-12">
+            <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
+        </div>
     </ng-container>
 </mat-card>
