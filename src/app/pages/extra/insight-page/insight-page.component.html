@@ -1,16 +1,23 @@
 <mat-card class="cardWithShadow">
-    <mat-card-content>
-        <mat-card-title>Neural Insight</mat-card-title>
+    <mat-card-content class="b-t-1">
+        <mat-card-title class="title">Neural Insight</mat-card-title>
         <mat-card-subtitle class="mat-body-1">Summarize your text</mat-card-subtitle>
     </mat-card-content>
-</mat-card>
 
-
-<mat-card class="cardWithShadow">
-    <mat-card-content class="review-text-textarea-container">
+    <mat-card-content class="review-text-textarea-container b-t-1">
         <mat-form-field appearance="outline" class="h-100 w-100">
-            <mat-label>Type review here...</mat-label>
-            <textarea class="review-text-textarea" matInput placeholder={{DEMO_REVIEW}}></textarea>
+            <mat-label for="review">Type review here...</mat-label>
+            <textarea class="review-text-textarea" matInput [formControl]="review"></textarea>
         </mat-form-field>
+        <button mat-flat-button color="primary" matTooltip="Get summary of your text" (click)="onSummarize()">
+            Summarize
+        </button>
     </mat-card-content>
+
+    <ng-container *ngIf="summary">
+        <mat-card-content class="b-t-1 p-t-0">
+            <mat-card-title class="title">Summary</mat-card-title>
+            <div>{{summary}}</div>
+        </mat-card-content>
+    </ng-container>
 </mat-card>
