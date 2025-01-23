@@ -1,7 +1,7 @@
 <mat-card class="cardWithShadow">
     <mat-card-content class="b-t-1">
         <mat-card-title class="title">Neural Insight</mat-card-title>
-        <mat-card-subtitle class="mat-body-1">Summarize your text</mat-card-subtitle>
+        <mat-card-subtitle class="mat-body-1">Get analytics of a review</mat-card-subtitle>
     </mat-card-content>
 
     <mat-card-content class="review-text-textarea-container b-t-1">
@@ -9,8 +9,8 @@
             <mat-label for="review">Type review here...</mat-label>
             <textarea class="review-text-textarea" matInput [formControl]="review"></textarea>
         </mat-form-field>
-        <button mat-flat-button color="primary" matTooltip="Get summary of your text" (click)="onSummarize()">
-            Summarize
+        <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onSummarize()">
+            Get Analytics
         </button>
     </mat-card-content>
 

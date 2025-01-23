@@ -1,10 +1,19 @@
 <div class="row">
-  
+
 </div>
 
-<div class="row">
-  <div class="col-lg-4">
-    <!-- <app-traffic-distribution></app-traffic-distribution> -->
+<div class="row justify-content-center">
+  <div class="col-lg-12 ">
+    <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-6 p-16">
+    <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"></app-traffic-distribution>
+  </div>
+
+  <div class="col-lg-6 p-16">
     <app-product-sales></app-product-sales>
   </div>
 </div>
