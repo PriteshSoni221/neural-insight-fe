@@ -5,6 +5,7 @@ import { Routes } from '@angular/router';
 import { AppIconsComponent } from './icons/icons.component';
 import { AppSamplePageComponent } from './sample-page/sample-page.component';
 import { InsightPageComponent } from './insight-page/insight-page.component';
+import { ReviewUploadPageComponent } from './review-upload-page/review-upload-page.component';
 
 export const ExtraRoutes: Routes = [
   {
@@ -21,6 +22,10 @@ export const ExtraRoutes: Routes = [
       {
         path: 'insight-page',
         component: InsightPageComponent,
+      },
+      {
+        path: 'review-upload-page',
+        component: ReviewUploadPageComponent,
       },
     ],
   },

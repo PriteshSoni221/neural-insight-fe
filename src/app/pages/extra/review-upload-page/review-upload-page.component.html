@@ -1,16 +1,30 @@
 <mat-card class="cardWithShadow">
     <mat-card-content class="b-t-1">
-        <mat-card-title class="title">Get analytics of a review</mat-card-title>
-        <!-- <mat-card-subtitle class="mat-body-1">Get analytics of a review</mat-card-subtitle> -->
+        <mat-card-title class="title">Upload reviews</mat-card-title>
     </mat-card-content>
 
     <mat-card-content class="review-text-textarea-container b-t-1">
+
         <mat-form-field appearance="outline" class="h-100 w-100">
-            <mat-label for="review">Type review here...</mat-label>
-            <textarea class="review-text-textarea" matInput [formControl]="review"></textarea>
+            <mat-label>Product category</mat-label>
+            <mat-select [(ngModel)]="selectedProductCategory" name="food">
+                @for (category of productCategories; track category) {
+                <mat-option [value]="category.value">{{category.viewValue}}</mat-option>
+                }
+            </mat-select>
         </mat-form-field>
+
+        <mat-form-field appearance="outline" class="h-100 w-100">
+            <mat-label>Product name</mat-label>
+            <mat-select [(ngModel)]="selectedProductName" name="food">
+                @for (name of productNames; track name) {
+                <mat-option [value]="name.value">{{name.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
         <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onSummarize()">
-            Get Analytics
+            Upload
         </button>
     </mat-card-content>
 

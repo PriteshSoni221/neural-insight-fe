@@ -73,4 +73,10 @@ export const navItems: NavItem[] = [
     bgcolor: 'error',
     route: '/extra/insight-page',
   },
+  {
+    displayName: 'Review Upload Page',
+    iconName: 'layout-navbar-expand',
+    bgcolor: 'success',
+    route: '/extra/review-upload-page',
+  },
 ];

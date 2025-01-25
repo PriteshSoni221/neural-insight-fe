@@ -23,6 +23,7 @@ import { AppBlogComponent } from 'src/app/components/apps-blog/apps-blog.compone
   ],
   templateUrl: './starter.component.html',
   encapsulation: ViewEncapsulation.None,
+  styleUrl: './starter.component.scss'
 })
 
 export class StarterComponent {
