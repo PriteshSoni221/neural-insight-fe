@@ -4,16 +4,38 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Observable } from 'rxjs';
 import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/components/profit-expenses/profit-expenses.component';
 import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
 import { MaterialModule } from 'src/app/material.module';
-import { TextSummaryService } from 'src/app/services/text-summary.service';
+import { TextSummaryService, UploadReviewInterface } from 'src/app/services/text-summary.service';
 
-
-interface InputInterface {
-  value: string;
+interface ProductCategoryInterface {
+  value: number;
   viewValue: string;
+}
+
+interface ProductNameInterface {
+  value: number;
+  category: number;
+  viewValue: string;
+}
+
+interface AspectSentiment {
+  text: string;
+  sentiment: string;
+}
+
+interface ReviewOutput {
+  delivery: AspectSentiment;
+  quality: AspectSentiment;
+  price: AspectSentiment;
+  packaging: AspectSentiment;
+  service: AspectSentiment;
+}
+
+export interface Review {
+  input: string;
+  output: ReviewOutput;
 }
 
 
@@ -31,32 +53,45 @@ export class ReviewUploadPageComponent {
   public summary: string = ""
   public aspectSentimentChart!: Partial<profitExpanceChart> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
-  
+
   public selectedProductCategory: string;
-  public selectedProductName: string;
+  public selectedProductName: number;
 
-  public fileContent: any = null; 
+  public fileContent: Review[] | null = null;
 
-  public productCategories: InputInterface[] = [
-    { value: 'mouse', viewValue: 'Mouse' },
-    { value: 'phone', viewValue: 'Phone' },
-    { value: 'laptop', viewValue: 'Laptop' },
+  public productCategories: ProductCategoryInterface[] = [
+    { value: 1, viewValue: 'Mouse' },
+    { value: 2, viewValue: 'Phone' },
+    { value: 3, viewValue: 'Laptop' },
   ];
 
-  public productNames: InputInterface[] = [
-    { value: 'macbook pro', viewValue: 'Macbook pro' },
-    { value: 'iphone 16 pro', viewValue: 'iPhone 16 pro' },
-    { value: 'airpods pro max', viewValue: 'AirPods pro max' },
+  public productNames: ProductNameInterface[] = [
+    { value: 1, category: 3, viewValue: 'Macbook pro' },
+    { value: 1, category: 3, viewValue: 'iPhone 16 pro' },
+    { value: 1, category: 3, viewValue: 'AirPods pro max' },
   ];
 
   constructor(private textSummaryService: TextSummaryService) { }
 
-  public onSummarize(): void {
-
-    if (this.selectedProductCategory && this.selectedProductName) {
-      console.log("categoty", this.selectedProductCategory, "name", this.selectedProductName)
+  public onUpload(): void {
+    if (this.selectedProductCategory && this.selectedProductName && this.fileContent) {
+      const body: UploadReviewInterface = {
+        productID: this.selectedProductName,
+        fileContent: this.fileContent
+      }
+      this.textSummaryService.uploadReviews(body).subscribe({
+        next: (response) => {
+          this.summary = response.summary;
+          this.loadChart()
+          this.loadDistributionChart()
+        },
+        error: (error) => {
+          console.error("error fetching summary", error);
+          this.summary = "An error occurred while fetching the summary."
+        }
+      })
     } else {
-      alert("Please enter a product category and name first.")
+      alert("Please enter a Product category, name and upload valid reviews")
     }
   }
 
