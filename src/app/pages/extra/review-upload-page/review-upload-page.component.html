@@ -23,6 +23,14 @@
             </mat-select>
         </mat-form-field>
 
+        <div class="file-upload-input">
+            <input type="file" (change)="onFileUpload($event)" accept=".json" />
+            <!-- <div *ngIf="fileContent">
+                <h3>File Content:</h3>
+                <pre>{{ fileContent | json }}</pre>
+            </div> -->
+        </div>
+
         <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onSummarize()">
             Upload
         </button>

@@ -35,6 +35,8 @@ export class ReviewUploadPageComponent {
   public selectedProductCategory: string;
   public selectedProductName: string;
 
+  public fileContent: any = null; 
+
   public productCategories: InputInterface[] = [
     { value: 'mouse', viewValue: 'Mouse' },
     { value: 'phone', viewValue: 'Phone' },
@@ -52,13 +54,44 @@ export class ReviewUploadPageComponent {
   public onSummarize(): void {
 
     if (this.selectedProductCategory && this.selectedProductName) {
-      // console.log(this.productCategory.value, this.productName.value, this.foods)
       console.log("categoty", this.selectedProductCategory, "name", this.selectedProductName)
     } else {
       alert("Please enter a product category and name first.")
     }
   }
 
+  public onFileUpload(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      // Validate file type
+      if (file.type !== 'application/json') {
+        alert('Please upload a valid JSON file.');
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        try {
+          this.fileContent = JSON.parse(e.target?.result as string); // Parse JSON
+          console.log('File Content:', this.fileContent); // Debug
+        } catch (err) {
+          console.error('Error parsing JSON:', err);
+          alert('Invalid JSON file.');
+        }
+      };
+
+      reader.onerror = () => {
+        console.error('Error reading file.');
+        alert('Error reading file.');
+      };
+
+      reader.readAsText(file); // Read file as text
+    }
+  }
 
   private loadChart(): void {
     this.aspectSentimentChart = {
