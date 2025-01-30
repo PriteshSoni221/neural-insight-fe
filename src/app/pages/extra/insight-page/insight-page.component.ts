@@ -5,6 +5,7 @@ import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/componen
 import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
 import { MaterialModule } from 'src/app/material.module';
 import { TextSummaryService } from 'src/app/services/text-summary.service';
+import { ReviewOutput } from '../review-upload-page/review-upload-page.component';
 
 @Component({
   selector: 'app-insight-page',
@@ -14,8 +15,8 @@ import { TextSummaryService } from 'src/app/services/text-summary.service';
   styleUrl: './insight-page.component.scss'
 })
 export class InsightPageComponent {
-  public review: FormControl<string | null> = new FormControl('');
-  public summary: string = ""
+  public review: FormControl<string | null> = new FormControl("The item arrived before I expected, but unfortunately the manual wasn't included in the box.");
+  public reviewOutput: ReviewOutput | null = null
   public aspectSentimentChart!: Partial<profitExpanceChart> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
 
@@ -27,13 +28,13 @@ export class InsightPageComponent {
     if (this.review.value) {
       this.textSummaryService.getSummary(this.review.value).subscribe({
         next: (response) => {
-          this.summary = response.summary;
+          this.reviewOutput = response.output;
           this.loadChart()
           this.loadDistributionChart()
         },
         error: (error) => {
           console.error("error fetching summary", error);
-          this.summary = "An error occurred while fetching the summary."
+          this.reviewOutput = null
         }
       })
     } else {
@@ -46,12 +47,12 @@ export class InsightPageComponent {
       series: [
         {
           name: 'Number of positive ratings',
-          data: [1, 1, 0, 0, 1],
+          data: [0, 0, 1, 0, 0],
           color: '#0085db',
         },
         {
           name: 'Number of negative ratings',
-          data: [0, 1, 1, 1, 1],
+          data: [0, 1, 0, 1, 0],
           color: '#fb977d',
         },
       ],

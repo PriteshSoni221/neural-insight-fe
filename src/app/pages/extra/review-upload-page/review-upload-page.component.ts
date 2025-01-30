@@ -20,7 +20,7 @@ interface ProductNameInterface {
   viewValue: string;
 }
 
-interface ReviewOutput {
+export interface ReviewOutput {
   delivery: AspectSentiment;
   quality: AspectSentiment;
   price: AspectSentiment;
@@ -47,6 +47,7 @@ interface AspectSentiment {
 
 interface AnalyzedReviewsResponse {
   analyzed_reviews: AnalyzedReview[];
+  summary: string
 }
 
 @Component({
@@ -61,6 +62,7 @@ export class ReviewUploadPageComponent {
   public productCategory: FormControl<string | null> = new FormControl('');
   public productName: FormControl<string | null> = new FormControl('');
   public analyzed_reviews: AnalyzedReview[] = []
+  public summary: string | null = ""
   public aspectSentimentChart!: Partial<profitExpanceChart> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
 
@@ -76,9 +78,18 @@ export class ReviewUploadPageComponent {
   ];
 
   public productNames: ProductNameInterface[] = [
-    { value: 1, category: 3, viewValue: 'Macbook pro' },
+    { value: 1, category: 3, viewValue: 'Macbook M1 pro' },
     { value: 1, category: 3, viewValue: 'iPhone 16 pro' },
+    { value: 1, category: 3, viewValue: 'Galaxy S22 ultra' },
+    { value: 1, category: 3, viewValue: 'iPhone 14 pro' },
     { value: 1, category: 3, viewValue: 'AirPods pro max' },
+    { value: 1, category: 3, viewValue: 'Logitech G pro' },
+    { value: 1, category: 3, viewValue: 'Macbook M2 pro' },
+    { value: 1, category: 3, viewValue: 'iPhone 13' },
+    { value: 1, category: 3, viewValue: 'Galaxy S24 ultra' },
+    { value: 1, category: 3, viewValue: 'Galaxy S23 ultra' },
+    { value: 1, category: 3, viewValue: 'iPhone 15 pro' },
+    { value: 1, category: 3, viewValue: 'Galaxy S21 ultra' },
   ];
 
   constructor(private textSummaryService: TextSummaryService) { }
@@ -94,6 +105,7 @@ export class ReviewUploadPageComponent {
         next: (response) => {
           const APIResponse: AnalyzedReviewsResponse = response;
           this.analyzed_reviews = APIResponse.analyzed_reviews;
+          this.summary = APIResponse.summary;
           this.loadChart()
           this.loadDistributionChart()
         },
@@ -145,12 +157,12 @@ export class ReviewUploadPageComponent {
       series: [
         {
           name: 'Number of positive ratings',
-          data: [1, 1, 0, 0, 1],
+          data: [13, 9, 7, 12, 15],
           color: '#0085db',
         },
         {
           name: 'Number of negative ratings',
-          data: [0, 1, 1, 1, 1],
+          data: [10, 12, 6, 8, 14],
           color: '#fb977d',
         },
       ],

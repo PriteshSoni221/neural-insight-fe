@@ -40,12 +40,12 @@ export class StarterComponent {
       series: [
         {
           name: 'Number of positive ratings',
-          data: [1, 1, 0, 0, 1],
+          data: [10, 12, 6, 8, 14],
           color: '#0085db',
         },
         {
           name: 'Number of negative ratings',
-          data: [0, 1, 1, 1, 1],
+          data: [13, 9, 7, 2, 15],
           color: '#fb977d',
         },
       ],

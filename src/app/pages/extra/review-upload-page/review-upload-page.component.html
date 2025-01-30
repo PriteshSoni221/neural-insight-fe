@@ -39,7 +39,9 @@
     <ng-container *ngIf="analyzed_reviews.length > 0">
         <mat-card-content class="b-t-1 p-t-0">
             <mat-card-title class="title">Summary</mat-card-title>
-            <div>Summary of the reviews</div>
+            <ng-container *ngIf="summary">
+                <div>{{summary}}</div>
+            </ng-container>
         </mat-card-content>
         <div class="col-lg-12">
             <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
