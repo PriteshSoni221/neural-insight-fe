@@ -5,7 +5,8 @@ import { Review } from '../pages/extra/review-upload-page/review-upload-page.com
 
 export interface UploadReviewInterface {
   productID: number;
-  fileContent: Review[]
+  fileContent: Review[];
+  isDummy: boolean;
 }
 
 @Injectable({
@@ -13,7 +14,7 @@ export interface UploadReviewInterface {
 })
 export class TextSummaryService {
 
-  private apiBaseUrl = 'http://127.0.0.1:8000'; // Replace with your backend endpoint
+  private apiBaseUrl = 'http://127.0.0.1:5000'; // Replace with your backend endpoint
 
   constructor(private http: HttpClient) { }
 

@@ -36,10 +36,10 @@
         </button>
     </mat-card-content>
 
-    <ng-container *ngIf="summary">
+    <ng-container *ngIf="analyzed_reviews.length > 0">
         <mat-card-content class="b-t-1 p-t-0">
             <mat-card-title class="title">Summary</mat-card-title>
-            <div>{{summary}}</div>
+            <div>Summary of the reviews</div>
         </mat-card-content>
         <div class="col-lg-12">
             <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>

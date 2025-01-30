@@ -20,6 +20,7 @@ import {
   ApexResponsive,
   NgApexchartsModule,
 } from 'ng-apexcharts';
+import { CommonModule } from '@angular/common';
 
 
 interface month {
@@ -45,7 +46,7 @@ export interface profitExpanceChart {
 @Component({
   selector: 'app-profit-expenses',
   standalone: true,
-  imports: [MaterialModule, TablerIconsModule, MatButtonModule, NgApexchartsModule],
+  imports: [MaterialModule, TablerIconsModule, MatButtonModule, NgApexchartsModule, CommonModule],
   templateUrl: './profit-expenses.component.html',
 })
 export class AppProfitExpensesComponent {

@@ -20,11 +20,6 @@ interface ProductNameInterface {
   viewValue: string;
 }
 
-interface AspectSentiment {
-  text: string;
-  sentiment: string;
-}
-
 interface ReviewOutput {
   delivery: AspectSentiment;
   quality: AspectSentiment;
@@ -38,6 +33,21 @@ export interface Review {
   output: ReviewOutput;
 }
 
+interface AnalyzedReview {
+  _id: string;
+  history: any[]; // Adjust the type if history has a specific structure
+  input: string;
+  output: ReviewOutput
+}
+
+interface AspectSentiment {
+  sentiment: "positive" | "negative" | "neutral";
+  text: string;
+}
+
+interface AnalyzedReviewsResponse {
+  analyzed_reviews: AnalyzedReview[];
+}
 
 @Component({
   selector: 'app-review-upload-page',
@@ -50,7 +60,7 @@ export interface Review {
 export class ReviewUploadPageComponent {
   public productCategory: FormControl<string | null> = new FormControl('');
   public productName: FormControl<string | null> = new FormControl('');
-  public summary: string = ""
+  public analyzed_reviews: AnalyzedReview[] = []
   public aspectSentimentChart!: Partial<profitExpanceChart> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
 
@@ -77,17 +87,19 @@ export class ReviewUploadPageComponent {
     if (this.selectedProductCategory && this.selectedProductName && this.fileContent) {
       const body: UploadReviewInterface = {
         productID: this.selectedProductName,
-        fileContent: this.fileContent
+        fileContent: this.fileContent,
+        isDummy: true,
       }
       this.textSummaryService.uploadReviews(body).subscribe({
         next: (response) => {
-          this.summary = response.summary;
+          const APIResponse: AnalyzedReviewsResponse = response;
+          this.analyzed_reviews = APIResponse.analyzed_reviews;
           this.loadChart()
           this.loadDistributionChart()
         },
         error: (error) => {
-          console.error("error fetching summary", error);
-          this.summary = "An error occurred while fetching the summary."
+          console.error("error uploading reviews", error);
+          this.analyzed_reviews = []
         }
       })
     } else {
@@ -111,8 +123,8 @@ export class ReviewUploadPageComponent {
 
       reader.onload = (e: ProgressEvent<FileReader>) => {
         try {
-          this.fileContent = JSON.parse(e.target?.result as string); // Parse JSON
-          console.log('File Content:', this.fileContent); // Debug
+          this.fileContent = JSON.parse(e.target?.result as string);
+          // console.log('File Content:', this.fileContent);
         } catch (err) {
           console.error('Error parsing JSON:', err);
           alert('Invalid JSON file.');
