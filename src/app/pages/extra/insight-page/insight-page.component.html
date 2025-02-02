@@ -16,30 +16,20 @@
 
     <ng-container *ngIf="reviewOutput">
         <mat-card-content class="b-t-1 p-t-0">
-            <ng-container *ngIf="reviewOutput.delivery.text">
-                <mat-card-title class="title">Delivery</mat-card-title>
-                <div>{{reviewOutput.delivery.text}}</div>
-            </ng-container>
+            <mat-card-title class="title">Delivery</mat-card-title>
+            <div>{{reviewOutput.delivery.text || "-"}}</div>
 
-            <ng-container *ngIf="reviewOutput.packaging.text">
-                <mat-card-title class="title">Packaging</mat-card-title>
-                <div>{{reviewOutput.packaging.text}}</div>
-            </ng-container>
+            <mat-card-title class="title">Packaging</mat-card-title>
+            <div>{{reviewOutput.packaging.text || "-"}}</div>
 
-            <ng-container *ngIf="reviewOutput.price.text">
-                <mat-card-title class="title">Price</mat-card-title>
-                <div>{{reviewOutput.price.text}}</div>
-            </ng-container>
+            <mat-card-title class="title">Price</mat-card-title>
+            <div>{{reviewOutput.price.text || "-"}}</div>
 
-            <ng-container *ngIf="reviewOutput.quality.text">
-                <mat-card-title class="title">Quality</mat-card-title>
-                <div>{{reviewOutput.quality.text}}</div>
-            </ng-container>
+            <mat-card-title class="title">Quality</mat-card-title>
+            <div>{{reviewOutput.quality.text || "-"}}</div>
 
-            <ng-container *ngIf="reviewOutput.service.text">
-                <mat-card-title class="title">Service</mat-card-title>
-                <div>{{reviewOutput.service.text}}</div>
-            </ng-container>
+            <mat-card-title class="title">Service</mat-card-title>
+            <div>{{reviewOutput.service.text || "-"}}</div>
 
         </mat-card-content>
 

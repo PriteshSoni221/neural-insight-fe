@@ -47,7 +47,14 @@ interface AspectSentiment {
 
 interface AnalyzedReviewsResponse {
   analyzed_reviews: AnalyzedReview[];
-  summary: string
+  summary: string;
+  productID: number;
+}
+
+interface APIScoreByAspect {
+  positive: number[];
+  negative: number[];
+  neutral: number[];
 }
 
 @Component({
@@ -92,22 +99,31 @@ export class ReviewUploadPageComponent {
     { value: 1, category: 3, viewValue: 'Galaxy S21 ultra' },
   ];
 
+  private IS_DUMMY: boolean = true
+  public sentimentScore: APIScoreByAspect = {
+    positive: [],
+    negative: [],
+    neutral: []
+  }
+
   constructor(private textSummaryService: TextSummaryService) { }
 
   public onUpload(): void {
-    if (this.selectedProductCategory && this.selectedProductName && this.fileContent) {
+
+    if ((this.selectedProductCategory && this.selectedProductName && this.fileContent)) {
       const body: UploadReviewInterface = {
         productID: this.selectedProductName,
         fileContent: this.fileContent,
-        isDummy: true,
+        isDummy: this.IS_DUMMY,
       }
+
       this.textSummaryService.uploadReviews(body).subscribe({
         next: (response) => {
           const APIResponse: AnalyzedReviewsResponse = response;
           this.analyzed_reviews = APIResponse.analyzed_reviews;
+
+          this.calculateSentimentCounts(APIResponse)
           this.summary = APIResponse.summary;
-          this.loadChart()
-          this.loadDistributionChart()
         },
         error: (error) => {
           console.error("error uploading reviews", error);
@@ -118,6 +134,36 @@ export class ReviewUploadPageComponent {
       alert("Please enter a Product category, name and upload valid reviews")
     }
   }
+
+  public calculateSentimentCounts(response: AnalyzedReviewsResponse): void {
+    const categories = ['price', 'quality', 'delivery', 'packaging', 'service'];
+
+    const sentimentCounts: any = {
+      positive: Array(categories.length).fill(0),
+      negative: Array(categories.length).fill(0),
+      neutral: Array(categories.length).fill(0)
+    };
+
+    response.analyzed_reviews.forEach(review => {
+      categories.forEach((category, index) => {
+        const reviewItem: any = review
+        const sentiment: string = reviewItem['output'][`${category}`]?.sentiment;
+        if (sentiment) {
+          sentimentCounts[sentiment][index]++;
+        }
+      });
+    });
+
+    this.sentimentScore = {
+      positive: sentimentCounts.positive,
+      negative: sentimentCounts.negative,
+      neutral: sentimentCounts.neutral
+    };
+
+    this.loadChart()
+    this.loadDistributionChart()
+  }
+
 
   public onFileUpload(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -157,13 +203,18 @@ export class ReviewUploadPageComponent {
       series: [
         {
           name: 'Number of positive ratings',
-          data: [13, 9, 7, 12, 15],
+          data: this.sentimentScore.positive,
           color: '#0085db',
         },
         {
           name: 'Number of negative ratings',
-          data: [10, 12, 6, 8, 14],
+          data: this.sentimentScore.negative,
           color: '#fb977d',
+        },
+        {
+          name: 'Number of neutral ratings',
+          data: this.sentimentScore.neutral,
+          color: '#f8c076',
         },
       ],
 
@@ -227,8 +278,10 @@ export class ReviewUploadPageComponent {
 
   private loadDistributionChart(): void {
     this.trafficdistributionChart = {
-      series: [12, 8, 15],
-      labels: ['neutral', 'negative', 'positive'],
+      series: [this.sentimentScore.positive.reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+      this.sentimentScore.negative.reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+      this.sentimentScore.neutral.reduce((accumulator, currentValue) => accumulator + currentValue, 0)],
+      labels: ['positive', 'negative', 'neutral'],
       chart: {
         type: 'donut',
         fontFamily: "'Plus Jakarta Sans', sans-serif;",
@@ -236,9 +289,9 @@ export class ReviewUploadPageComponent {
         toolbar: {
           show: false,
         },
-        height: 160,
+        height: 180,
       },
-      colors: ['#f8c076', '#fb977d', '#0085db'],
+      colors: ['#0085db', '#fb977d', '#f8c076',],
       plotOptions: {
         pie: {
           donut: {
@@ -264,7 +317,7 @@ export class ReviewUploadPageComponent {
         show: false,
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       legend: {
         show: true,
