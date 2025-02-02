@@ -5,7 +5,7 @@ import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/componen
 import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
 import { MaterialModule } from 'src/app/material.module';
 import { TextSummaryService } from 'src/app/services/text-summary.service';
-import { ReviewOutput } from '../review-upload-page/review-upload-page.component';
+import { APIScoreByAspect, Review, ReviewOutput } from '../review-upload-page/review-upload-page.component';
 
 @Component({
   selector: 'app-insight-page',
@@ -20,6 +20,12 @@ export class InsightPageComponent {
   public aspectSentimentChart!: Partial<profitExpanceChart> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
 
+  public sentimentScore: APIScoreByAspect = {
+    positive: [],
+    negative: [],
+    neutral: []
+  }
+
   constructor(private textSummaryService: TextSummaryService) { }
 
   public onSummarize(): void {
@@ -29,8 +35,7 @@ export class InsightPageComponent {
       this.textSummaryService.getSummary(this.review.value).subscribe({
         next: (response) => {
           this.reviewOutput = response.output;
-          this.loadChart()
-          this.loadDistributionChart()
+          this.calculateSentimentCounts(response)
         },
         error: (error) => {
           console.error("error fetching summary", error);
@@ -42,18 +47,50 @@ export class InsightPageComponent {
     }
   }
 
+  public calculateSentimentCounts(response: Review): void {
+    const categories = ['price', 'quality', 'delivery', 'packaging', 'service'];
+
+    const sentimentCounts: any = {
+      positive: Array(categories.length).fill(0),
+      negative: Array(categories.length).fill(0),
+      neutral: Array(categories.length).fill(0)
+    };
+
+      categories.forEach((category, index) => {
+        const reviewItem: any = response
+        const sentiment: string = reviewItem['output'][`${category}`]?.sentiment;
+        if (sentiment) {
+          sentimentCounts[sentiment][index]++;
+        }
+      });
+
+    this.sentimentScore = {
+      positive: sentimentCounts.positive,
+      negative: sentimentCounts.negative,
+      neutral: sentimentCounts.neutral
+    };
+
+    this.loadChart()
+    this.loadDistributionChart()
+  }
+
   private loadChart(): void {
     this.aspectSentimentChart = {
       series: [
         {
           name: 'Number of positive ratings',
-          data: [0, 0, 1, 0, 0],
+          data: this.sentimentScore.positive,
           color: '#0085db',
         },
         {
           name: 'Number of negative ratings',
-          data: [0, 1, 0, 1, 0],
+          data: this.sentimentScore.negative,
           color: '#fb977d',
+        },
+        {
+          name: 'Number of neutral ratings',
+          data: this.sentimentScore.neutral,
+          color: '#f8c076',
         },
       ],
 
@@ -71,7 +108,7 @@ export class InsightPageComponent {
       },
       chart: {
         type: 'bar',
-        height: 390,
+        height: 290,
         offsetY: 10,
         foreColor: '#adb0bb',
         fontFamily: 'inherit',
@@ -117,8 +154,10 @@ export class InsightPageComponent {
 
   private loadDistributionChart(): void {
     this.trafficdistributionChart = {
-      series: [12, 8, 15],
-      labels: ['neutral', 'negative', 'positive'],
+      series: [this.sentimentScore.positive.reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+      this.sentimentScore.negative.reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+      this.sentimentScore.neutral.reduce((accumulator, currentValue) => accumulator + currentValue, 0)],
+      labels: ['positive', 'negative', 'neutral'],
       chart: {
         type: 'donut',
         fontFamily: "'Plus Jakarta Sans', sans-serif;",
@@ -126,9 +165,9 @@ export class InsightPageComponent {
         toolbar: {
           show: false,
         },
-        height: 160,
+        height: 180,
       },
-      colors: ['#f8c076', '#fb977d', '#0085db'],
+      colors: ['#0085db', '#fb977d', '#f8c076',],
       plotOptions: {
         pie: {
           donut: {
@@ -154,7 +193,7 @@ export class InsightPageComponent {
         show: false,
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       legend: {
         show: true,

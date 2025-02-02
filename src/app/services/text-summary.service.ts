@@ -23,7 +23,7 @@ export class TextSummaryService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { review: review }; // Payload to send to backend
 
-    return this.http.post<any>(this.apiBaseUrl + '/summarize', body, { headers });
+    return this.http.post<any>(this.apiBaseUrl + '/analyze_review', body, { headers });
   }
 
   uploadReviews(reviews: UploadReviewInterface): Observable<any> {

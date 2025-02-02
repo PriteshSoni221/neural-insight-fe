@@ -51,7 +51,7 @@ interface AnalyzedReviewsResponse {
   productID: number;
 }
 
-interface APIScoreByAspect {
+export interface APIScoreByAspect {
   positive: number[];
   negative: number[];
   neutral: number[];
