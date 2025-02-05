@@ -19,6 +19,7 @@ export class InsightPageComponent {
   public reviewOutput: ReviewOutput | null = null
   public aspectSentimentChart!: Partial<profitExpanceChart> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
+  public isLoading: boolean = false
 
   public sentimentScore: APIScoreByAspect = {
     positive: [],
@@ -32,14 +33,19 @@ export class InsightPageComponent {
     console.log("review", this.review.value);
 
     if (this.review.value) {
+      this.isLoading = true;
+      
       this.textSummaryService.getSummary(this.review.value).subscribe({
         next: (response) => {
           this.reviewOutput = response.output;
           this.calculateSentimentCounts(response)
+          this.isLoading = false;
         },
         error: (error) => {
           console.error("error fetching summary", error);
           this.reviewOutput = null
+          this.isLoading = false;
+          alert("Error fetching summary. Please try again.")
         }
       })
     } else {

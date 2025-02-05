@@ -80,6 +80,8 @@ export class ReviewUploadPageComponent {
 
   public fileContent: Review[] | null = null;
 
+  public isLoading: boolean = false
+
   public productCategories: ProductCategoryInterface[] = [
     { value: 1, viewValue: 'Mouse' },
     { value: 2, viewValue: 'Phone' },
@@ -88,7 +90,7 @@ export class ReviewUploadPageComponent {
 
   public productNames: ProductNameInterface[] = productNames
 
-  private IS_DUMMY: boolean = true
+  private IS_DUMMY: boolean = false
   public sentimentScore: APIScoreByAspect = {
     positive: [],
     negative: [],
@@ -106,6 +108,8 @@ export class ReviewUploadPageComponent {
         isDummy: this.IS_DUMMY,
       }
 
+      this.isLoading = true;
+
       this.textSummaryService.uploadReviews(body).subscribe({
         next: (response) => {
           const APIResponse: AnalyzedReviewsResponse = response;
@@ -113,10 +117,13 @@ export class ReviewUploadPageComponent {
 
           this.calculateSentimentCounts(APIResponse)
           this.summary = APIResponse.summary;
+          this.isLoading = false;
         },
         error: (error) => {
           console.error("error uploading reviews", error);
           this.analyzed_reviews = []
+          alert("Error uploading reviews")
+          this.isLoading = false;
         }
       })
     } else {

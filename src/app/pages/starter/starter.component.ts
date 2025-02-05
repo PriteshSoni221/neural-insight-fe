@@ -117,6 +117,8 @@ export class StarterComponent {
         error: (error) => {
           console.error("error uploading reviews", error);
           this.analyzed_reviews = []
+          alert("Error fetching reviews")
+          this.isLoading = false;
         }
       })
     } else {
