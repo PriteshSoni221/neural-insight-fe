@@ -16,9 +16,9 @@
 
         <mat-form-field appearance="outline" class="h-100 w-100">
             <mat-label>Product name</mat-label>
-            <mat-select [(ngModel)]="selectedProductName" name="food">
+            <mat-select [(ngModel)]="selectedProductId" name="food">
                 @for (name of productNames; track name) {
-                <mat-option [value]="name.value">{{name.viewValue}}</mat-option>
+                <mat-option [value]="name.productId">{{name.viewValue}}</mat-option>
                 }
             </mat-select>
         </mat-form-field>

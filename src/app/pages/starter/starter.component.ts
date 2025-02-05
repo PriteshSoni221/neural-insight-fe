@@ -1,13 +1,49 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../../material.module';
-import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/components/profit-expenses/profit-expenses.component';
-import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
-import { AppProductSalesComponent } from 'src/app/components/product-sales/product-sales.component';
-import { AppUpcomingSchedulesComponent } from 'src/app/components/upcoming-schedules/upcoming-schedules.component';
-import { AppTopEmployeesComponent } from 'src/app/components/top-employees/top-employees.component';
-import { AppBlogComponent } from 'src/app/components/apps-blog/apps-blog.component';
+import {
+  AppProfitExpensesComponent,
+  profitExpanceChart,
+} from 'src/app/components/profit-expenses/profit-expenses.component';
+import {
+  AppTrafficDistributionComponent,
+  trafficdistributionChart,
+} from 'src/app/components/traffic-distribution/traffic-distribution.component';
+import {
+  APIScoreByAspect,
+  ProductCategoryInterface,
+} from '../extra/review-upload-page/review-upload-page.component';
+import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { TextSummaryService } from 'src/app/services/text-summary.service';
+import { productNames } from 'src/assets/constants/productNames';
+import { ProductNameInterface } from 'src/assets/interface/productsInterface';
 
+type Sentiment = 'positive' | 'negative' | 'neutral';
 
+type AnalyzedReview = {
+  DeliverySentiment: Sentiment;
+  DeliveryText: string;
+  PackagingSentiment: Sentiment;
+  PackagingText: string;
+  PriceSentiment: Sentiment;
+  PriceText: string;
+  Product_id: number;
+  QualitySentiment: Sentiment;
+  QualityText: string;
+  ServiceSentiment: Sentiment;
+  ServiceText: string;
+  Text: string;
+  _id: string;
+};
+
+interface AnalyzedReviewsResponse {
+  analyzed_reviews: AnalyzedReview[];
+  summary: string;
+  productID: number;
+}
 
 @Component({
   selector: 'app-starter',
@@ -16,23 +52,99 @@ import { AppBlogComponent } from 'src/app/components/apps-blog/apps-blog.compone
     MaterialModule,
     AppProfitExpensesComponent,
     AppTrafficDistributionComponent,
-    AppProductSalesComponent,
-    AppUpcomingSchedulesComponent,
-    AppTopEmployeesComponent,
-    AppBlogComponent
+    CommonModule,
+    MatSelectModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './starter.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrl: './starter.component.scss'
+  styleUrl: './starter.component.scss',
 })
-
 export class StarterComponent {
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
-  public aspectSentimentChart!: Partial<profitExpanceChart> | any
+  public aspectSentimentChart!: Partial<profitExpanceChart> | any;
 
-  constructor(){
-    this.loadDistributionChart()
+  public selectedProductCategory: string;
+  public selectedProductName: number;
+  public analyzed_reviews: AnalyzedReview[] = []
+  public summary: string | null = ""
+
+  public sentimentScore: APIScoreByAspect = {
+    positive: [],
+    negative: [],
+    neutral: []
+  }
+
+  private IS_DUMMY: boolean = true
+
+  constructor(private textSummaryService: TextSummaryService) {
+    this.loadDistributionChart();
+    this.loadChart();
+  }
+
+  public productCategories: ProductCategoryInterface[] = [
+    { value: 1, viewValue: 'Mouse' },
+    { value: 2, viewValue: 'Phone' },
+    { value: 3, viewValue: 'Laptop' },
+  ];
+
+  public productNames: ProductNameInterface[] = productNames
+
+  public onSubmit(): void {
+
+    if ((this.selectedProductCategory && this.selectedProductName)) {
+
+      if (this.IS_DUMMY) {
+        this.selectedProductName = 0
+      }
+
+      this.textSummaryService.getReviewsByProduct(this.selectedProductName).subscribe({
+        next: (response) => {
+          const APIResponse: AnalyzedReviewsResponse = response;
+          this.analyzed_reviews = APIResponse.analyzed_reviews;
+
+          this.calculateSentimentCounts(APIResponse)
+          this.summary = APIResponse.summary;
+        },
+        error: (error) => {
+          console.error("error uploading reviews", error);
+          this.analyzed_reviews = []
+        }
+      })
+    } else {
+      alert("Please enter a Product category, name and upload valid reviews")
+    }
+  }
+
+  calculateSentimentCounts(response: AnalyzedReviewsResponse) {
+    const categories = ['Price', 'Quality', 'Delivery', 'Packaging', 'Service'];
+
+    const sentimentCounts: any = {
+      positive: Array(categories.length).fill(0),
+      negative: Array(categories.length).fill(0),
+      neutral: Array(categories.length).fill(0)
+    };
+
+    response.analyzed_reviews.forEach(review => {
+      categories.forEach((category, index) => {
+        const sentimentKey = `${category}Sentiment` as keyof AnalyzedReview;
+        const sentiment: any = review[sentimentKey];
+        if (sentiment) {
+          sentimentCounts[sentiment][index]++;
+        }
+      });
+    });
+
+    this.sentimentScore = {
+      positive: sentimentCounts.positive,
+      negative: sentimentCounts.negative,
+      neutral: sentimentCounts.neutral
+    };
+
     this.loadChart()
+    this.loadDistributionChart()
   }
 
   private loadChart(): void {
@@ -40,13 +152,18 @@ export class StarterComponent {
       series: [
         {
           name: 'Number of positive ratings',
-          data: [10, 12, 6, 8, 14],
+          data: this.sentimentScore.positive,
           color: '#0085db',
         },
         {
           name: 'Number of negative ratings',
-          data: [13, 9, 7, 2, 15],
+          data: this.sentimentScore.negative,
           color: '#fb977d',
+        },
+        {
+          name: 'Number of neutral ratings',
+          data: this.sentimentScore.neutral,
+          color: '#f8c076',
         },
       ],
 
@@ -59,7 +176,7 @@ export class StarterComponent {
           horizontal: false,
           columnWidth: '30%',
           borderRadius: 4,
-          endingShape: "rounded",
+          endingShape: 'rounded',
         },
       },
       chart: {
@@ -105,66 +222,68 @@ export class StarterComponent {
           },
         },
       ],
-    }
+    };
   }
 
   private loadDistributionChart(): void {
-      this.trafficdistributionChart = {
-        series: [12, 8, 15],
-        labels: ['neutral', 'negative', 'positive'],
-        chart: {
-          type: 'donut',
-          fontFamily: "'Plus Jakarta Sans', sans-serif;",
-          foreColor: '#adb0bb',
-          toolbar: {
-            show: false,
-          },
-          height: 160,
-        },
-        colors: ['#f8c076', '#fb977d', '#0085db'],
-        plotOptions: {
-          pie: {
-            donut: {
-              size: '80%',
-              background: 'none',
-              labels: {
-                show: true,
-                name: {
-                  show: true,
-                  fontSize: '12px',
-                  color: undefined,
-                  offsetY: 5,
-                },
-                value: {
-                  show: true,
-                  color: '#98aab4',
-                },
-              },
-            },
-          },
-        },
-        stroke: {
+    this.trafficdistributionChart = {
+      series: [this.sentimentScore.positive.reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+      this.sentimentScore.negative.reduce((accumulator, currentValue) => accumulator + currentValue, 0),
+      this.sentimentScore.neutral.reduce((accumulator, currentValue) => accumulator + currentValue, 0)],
+      labels: ['positive', 'negative', 'neutral'],
+      chart: {
+        type: 'donut',
+        fontFamily: "'Plus Jakarta Sans', sans-serif;",
+        foreColor: '#adb0bb',
+        toolbar: {
           show: false,
         },
-        dataLabels: {
-          enabled: false,
-        },
-        legend: {
-          show: true,
-        },
-        responsive: [
-          {
-            breakpoint: 491,
-            options: {
-              chart: {
-                width: 120,
+        height: 180,
+      },
+      colors: ['#0085db', '#fb977d', '#f8c076',],
+      plotOptions: {
+        pie: {
+          donut: {
+            size: '80%',
+            background: 'none',
+            labels: {
+              show: true,
+              name: {
+                show: true,
+                fontSize: '12px',
+                color: undefined,
+                offsetY: 5,
+              },
+              value: {
+                show: true,
+                color: '#98aab4',
               },
             },
           },
-        ],
-        tooltip: {
-          enabled: false,
         },
-      };
-    }
- }
+      },
+      stroke: {
+        show: false,
+      },
+      dataLabels: {
+        enabled: true,
+      },
+      legend: {
+        show: true,
+      },
+      responsive: [
+        {
+          breakpoint: 491,
+          options: {
+            chart: {
+              width: 120,
+            },
+          },
+        },
+      ],
+      tooltip: {
+        enabled: false,
+      },
+    };
+  }
+}

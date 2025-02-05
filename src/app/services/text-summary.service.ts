@@ -32,4 +32,11 @@ export class TextSummaryService {
 
     return this.http.post<any>(this.apiBaseUrl + '/upload-reviews', body, { headers });
   }
+  
+  getReviewsByProduct(productID: number): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.get<any>(this.apiBaseUrl + '/fetch_reviews?productId=' + productID, { headers });
+  }
+  
 }

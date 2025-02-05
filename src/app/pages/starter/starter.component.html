@@ -1,26 +1,57 @@
 <mat-card class="cardWithShadow">
-
   <div class="row p-h-16">
-
-      <h1 class="user-title p-24">Welcome back, John Watson</h1>
+    <h1 class="user-title p-24">Welcome back, John Watson</h1>
   </div>
 </mat-card>
 
-<div class="row justify-content-center">
-  <div class="col-lg-12 ">
-    <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
-  </div>
-</div>
+<mat-card class="cardWithShadow">
+  <mat-card-content class="b-t-1 padding-norm">
+    <mat-card-title class="title">Select Product</mat-card-title>
+  </mat-card-content>
 
-<div class="row justify-content-center">
-  <div class="col-lg-6 p-16">
-    <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"></app-traffic-distribution>
+  <mat-card-content class="review-text-textarea-container b-t-1">
+    <mat-form-field appearance="outline" class="h-100 w-100">
+      <mat-label>Product category</mat-label>
+      <mat-select [(ngModel)]="selectedProductCategory" name="food">
+        @for (category of productCategories; track category) {
+        <mat-option [value]="category.value">{{category.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="h-100 w-100">
+      <mat-label>Product name</mat-label>
+      <mat-select [(ngModel)]="selectedProductName" name="food">
+        @for (name of productNames; track name) {
+        <mat-option [value]="name.productId">{{name.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onSubmit()">
+      Submit
+    </button>
+  </mat-card-content>
+</mat-card>
+
+
+<ng-container *ngIf="analyzed_reviews.length > 0">
+  <div class="row justify-content-center">
+    <div class="col-lg-12 ">
+      <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
+    </div>
   </div>
 
-  <div class="col-lg-6 p-16">
-    <app-product-sales></app-product-sales>
+  <div class="row justify-content-center">
+    <div class="col-lg-12">
+      <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"></app-traffic-distribution>
+    </div>
+
+    <!-- <div class="col-lg-6 p-16">
+      <app-product-sales></app-product-sales>
+    </div> -->
   </div>
-</div>
+</ng-container>
 
 <!-- <div class="row">
   <div class="col-lg-4">

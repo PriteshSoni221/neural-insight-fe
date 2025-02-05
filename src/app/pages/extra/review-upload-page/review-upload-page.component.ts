@@ -8,17 +8,19 @@ import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/componen
 import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
 import { MaterialModule } from 'src/app/material.module';
 import { TextSummaryService, UploadReviewInterface } from 'src/app/services/text-summary.service';
+import { productNames } from 'src/assets/constants/productNames';
+import { ProductNameInterface } from 'src/assets/interface/productsInterface';
 
-interface ProductCategoryInterface {
+export interface ProductCategoryInterface {
   value: number;
   viewValue: string;
 }
 
-interface ProductNameInterface {
-  value: number;
-  category: number;
-  viewValue: string;
-}
+// export interface ProductNameInterface {
+//   productId: number;
+//   category: string;
+//   viewValue: string;
+// }
 
 export interface ReviewOutput {
   delivery: AspectSentiment;
@@ -33,7 +35,7 @@ export interface Review {
   output: ReviewOutput;
 }
 
-interface AnalyzedReview {
+export interface AnalyzedReview {
   _id: string;
   history: any[]; // Adjust the type if history has a specific structure
   input: string;
@@ -45,7 +47,7 @@ interface AspectSentiment {
   text: string;
 }
 
-interface AnalyzedReviewsResponse {
+export interface AnalyzedReviewsResponse {
   analyzed_reviews: AnalyzedReview[];
   summary: string;
   productID: number;
@@ -74,7 +76,7 @@ export class ReviewUploadPageComponent {
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
 
   public selectedProductCategory: string;
-  public selectedProductName: number;
+  public selectedProductId: number;
 
   public fileContent: Review[] | null = null;
 
@@ -84,20 +86,7 @@ export class ReviewUploadPageComponent {
     { value: 3, viewValue: 'Laptop' },
   ];
 
-  public productNames: ProductNameInterface[] = [
-    { value: 1, category: 3, viewValue: 'Macbook M1 pro' },
-    { value: 1, category: 3, viewValue: 'iPhone 16 pro' },
-    { value: 1, category: 3, viewValue: 'Galaxy S22 ultra' },
-    { value: 1, category: 3, viewValue: 'iPhone 14 pro' },
-    { value: 1, category: 3, viewValue: 'AirPods pro max' },
-    { value: 1, category: 3, viewValue: 'Logitech G pro' },
-    { value: 1, category: 3, viewValue: 'Macbook M2 pro' },
-    { value: 1, category: 3, viewValue: 'iPhone 13' },
-    { value: 1, category: 3, viewValue: 'Galaxy S24 ultra' },
-    { value: 1, category: 3, viewValue: 'Galaxy S23 ultra' },
-    { value: 1, category: 3, viewValue: 'iPhone 15 pro' },
-    { value: 1, category: 3, viewValue: 'Galaxy S21 ultra' },
-  ];
+  public productNames: ProductNameInterface[] = productNames
 
   private IS_DUMMY: boolean = true
   public sentimentScore: APIScoreByAspect = {
@@ -110,9 +99,9 @@ export class ReviewUploadPageComponent {
 
   public onUpload(): void {
 
-    if ((this.selectedProductCategory && this.selectedProductName && this.fileContent)) {
+    if ((this.selectedProductCategory && this.selectedProductId && this.fileContent)) {
       const body: UploadReviewInterface = {
-        productID: this.selectedProductName,
+        productID: this.selectedProductId,
         fileContent: this.fileContent,
         isDummy: this.IS_DUMMY,
       }
