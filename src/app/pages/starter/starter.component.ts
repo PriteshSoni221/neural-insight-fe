@@ -21,6 +21,7 @@ import { TextSummaryService } from 'src/app/services/text-summary.service';
 import { productNames } from 'src/assets/constants/productNames';
 import { ProductNameInterface } from 'src/assets/interface/productsInterface';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import IS_DUMMY from 'src/assets/constants/dummyBoolean';
 
 type Sentiment = 'positive' | 'negative' | 'neutral';
 
@@ -80,7 +81,7 @@ export class StarterComponent {
     neutral: []
   }
 
-  private IS_DUMMY: boolean = false
+  private IS_DUMMY: boolean = IS_DUMMY
 
   constructor(private textSummaryService: TextSummaryService) {
     this.loadDistributionChart();

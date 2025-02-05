@@ -8,6 +8,7 @@ import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/componen
 import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
 import { MaterialModule } from 'src/app/material.module';
 import { TextSummaryService, UploadReviewInterface } from 'src/app/services/text-summary.service';
+import IS_DUMMY from 'src/assets/constants/dummyBoolean';
 import { productNames } from 'src/assets/constants/productNames';
 import { ProductNameInterface } from 'src/assets/interface/productsInterface';
 
@@ -16,11 +17,6 @@ export interface ProductCategoryInterface {
   viewValue: string;
 }
 
-// export interface ProductNameInterface {
-//   productId: number;
-//   category: string;
-//   viewValue: string;
-// }
 
 export interface ReviewOutput {
   delivery: AspectSentiment;
@@ -90,7 +86,8 @@ export class ReviewUploadPageComponent {
 
   public productNames: ProductNameInterface[] = productNames
 
-  private IS_DUMMY: boolean = false
+  private IS_DUMMY: boolean = IS_DUMMY
+  
   public sentimentScore: APIScoreByAspect = {
     positive: [],
     negative: [],

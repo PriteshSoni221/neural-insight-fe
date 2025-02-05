@@ -6,6 +6,7 @@ import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/a
 import { MaterialModule } from 'src/app/material.module';
 import { TextSummaryService } from 'src/app/services/text-summary.service';
 import { APIScoreByAspect, Review, ReviewOutput } from '../review-upload-page/review-upload-page.component';
+import IS_DUMMY from 'src/assets/constants/dummyBoolean';
 
 @Component({
   selector: 'app-insight-page',
@@ -26,6 +27,7 @@ export class InsightPageComponent {
     negative: [],
     neutral: []
   }
+  private IS_DUMMY: boolean = IS_DUMMY
 
   constructor(private textSummaryService: TextSummaryService) { }
 
@@ -34,8 +36,13 @@ export class InsightPageComponent {
 
     if (this.review.value) {
       this.isLoading = true;
+      let review = this.review.value
+
+      if (this.IS_DUMMY) {
+        review = "0"
+      }
       
-      this.textSummaryService.getSummary(this.review.value).subscribe({
+      this.textSummaryService.getSummary(review).subscribe({
         next: (response) => {
           this.reviewOutput = response.output;
           this.calculateSentimentCounts(response)
@@ -209,7 +216,10 @@ export class InsightPageComponent {
           breakpoint: 491,
           options: {
             chart: {
-              width: 120,
+              height: 120,
+            },
+            legend: {
+              show: false,
             },
           },
         },

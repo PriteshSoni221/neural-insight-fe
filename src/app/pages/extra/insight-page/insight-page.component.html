@@ -3,32 +3,37 @@
         <mat-card-title class="title">Get analytics of a review</mat-card-title>
         <!-- <mat-card-subtitle class="mat-body-1">Get analytics of a review</mat-card-subtitle> -->
     </mat-card-content>
+</mat-card>
 
+<mat-card class="cardWithShadow">
     <mat-card-content class="review-text-textarea-container b-t-1">
         <mat-form-field appearance="outline" class="h-100 w-100">
             <mat-label for="review">Type review here...</mat-label>
             <textarea class="review-text-textarea" matInput [formControl]="review"></textarea>
         </mat-form-field>
-        <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onSummarize()" [disabled]="isLoading">
+        <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onSummarize()"
+            [disabled]="isLoading">
             Get Analytics
         </button>
     </mat-card-content>
+</mat-card>
 
-    <ng-container *ngIf="isLoading; else notLoading">
+<ng-container *ngIf="isLoading; else notLoading">
+    <mat-card class="cardWithShadow">
+        <mat-card-content>
+            <div class="row justify-content-center">
+                <mat-spinner class="spinner"></mat-spinner>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</ng-container>
+
+<ng-template #notLoading>
+    <ng-container *ngIf="reviewOutput">
         <mat-card class="cardWithShadow">
-            <mat-card-content>
-                <div class="row justify-content-center">
-                    <mat-spinner class="spinner"></mat-spinner>
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </ng-container>
-
-    <ng-template #notLoading>
-
-
-        <ng-container *ngIf="reviewOutput">
             <mat-card-content class="b-t-1 p-t-0">
+                <h2>Aspects:</h2>
+
                 <mat-card-title class="title">Delivery</mat-card-title>
                 <div>{{reviewOutput.delivery.text || "-"}}</div>
 
@@ -43,20 +48,12 @@
 
                 <mat-card-title class="title">Service</mat-card-title>
                 <div>{{reviewOutput.service.text || "-"}}</div>
-
             </mat-card-content>
+        </mat-card>
 
-            <div class="col-lg-12">
-                <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
-            </div>
+        <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
 
+        <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"></app-traffic-distribution>
+    </ng-container>
 
-            <div class="col-lg-12">
-                <app-traffic-distribution
-                    [trafficdistributionChart]="trafficdistributionChart"></app-traffic-distribution>
-            </div>
-        </ng-container>
-
-    </ng-template>
-
-</mat-card>
+</ng-template>
