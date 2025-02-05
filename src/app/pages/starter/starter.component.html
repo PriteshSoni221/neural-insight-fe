@@ -28,31 +28,42 @@
       </mat-select>
     </mat-form-field>
 
-    <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onSubmit()">
+    <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onSubmit()"
+      [disabled]="isLoading">
       Submit
     </button>
   </mat-card-content>
 </mat-card>
 
-
-<ng-container *ngIf="analyzed_reviews.length > 0">
-  <div class="row justify-content-center">
-    <div class="col-lg-12 ">
-      <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
+<ng-container *ngIf="isLoading; else notLoading">
+<mat-card class="cardWithShadow">
+  <mat-card-content>
+    <div class="row justify-content-center">
+      <mat-spinner class="spinner"></mat-spinner>
     </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div class="col-lg-12">
-      <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"></app-traffic-distribution>
-    </div>
-
-    <!-- <div class="col-lg-6 p-16">
-      <app-product-sales></app-product-sales>
-    </div> -->
-  </div>
+  </mat-card-content>
+</mat-card>
 </ng-container>
 
+<ng-template #notLoading>
+  <ng-container *ngIf="analyzed_reviews.length > 0">
+    <div class="row justify-content-center">
+      <div class="col-lg-12 ">
+        <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"></app-traffic-distribution>
+      </div>
+
+      <!-- <div class="col-lg-6 p-16">
+      <app-product-sales></app-product-sales>
+    </div> -->
+    </div>
+  </ng-container>
+</ng-template>
 <!-- <div class="row">
   <div class="col-lg-4">
     <app-upcoming-schedules></app-upcoming-schedules>

@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TextSummaryService } from 'src/app/services/text-summary.service';
 import { productNames } from 'src/assets/constants/productNames';
 import { ProductNameInterface } from 'src/assets/interface/productsInterface';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 type Sentiment = 'positive' | 'negative' | 'neutral';
 
@@ -57,6 +58,7 @@ interface AnalyzedReviewsResponse {
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './starter.component.html',
   encapsulation: ViewEncapsulation.None,
@@ -70,6 +72,7 @@ export class StarterComponent {
   public selectedProductName: number;
   public analyzed_reviews: AnalyzedReview[] = []
   public summary: string | null = ""
+  public isLoading: boolean = false
 
   public sentimentScore: APIScoreByAspect = {
     positive: [],
@@ -77,7 +80,7 @@ export class StarterComponent {
     neutral: []
   }
 
-  private IS_DUMMY: boolean = true
+  private IS_DUMMY: boolean = false
 
   constructor(private textSummaryService: TextSummaryService) {
     this.loadDistributionChart();
@@ -99,6 +102,7 @@ export class StarterComponent {
       if (this.IS_DUMMY) {
         this.selectedProductName = 0
       }
+      this.isLoading = true;
 
       this.textSummaryService.getReviewsByProduct(this.selectedProductName).subscribe({
         next: (response) => {
@@ -107,6 +111,8 @@ export class StarterComponent {
 
           this.calculateSentimentCounts(APIResponse)
           this.summary = APIResponse.summary;
+
+          this.isLoading = false;
         },
         error: (error) => {
           console.error("error uploading reviews", error);
@@ -114,7 +120,7 @@ export class StarterComponent {
         }
       })
     } else {
-      alert("Please enter a Product category, name and upload valid reviews")
+      alert("Please enter a Product category and name")
     }
   }
 
