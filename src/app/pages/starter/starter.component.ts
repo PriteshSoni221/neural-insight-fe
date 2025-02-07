@@ -22,6 +22,7 @@ import { productNames } from 'src/assets/constants/productNames';
 import { ProductNameInterface } from 'src/assets/interface/productsInterface';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import IS_DUMMY from 'src/assets/constants/dummyBoolean';
+import { productCategories } from 'src/assets/constants/categoryNames';
 
 type Sentiment = 'positive' | 'negative' | 'neutral';
 
@@ -88,11 +89,7 @@ export class StarterComponent {
     this.loadChart();
   }
 
-  public productCategories: ProductCategoryInterface[] = [
-    { value: 1, viewValue: 'Mouse' },
-    { value: 2, viewValue: 'Phone' },
-    { value: 3, viewValue: 'Laptop' },
-  ];
+  public productCategories: ProductCategoryInterface[] = productCategories;
 
   public productNames: ProductNameInterface[] = productNames
 

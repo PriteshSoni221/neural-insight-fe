@@ -16,7 +16,7 @@ import IS_DUMMY from 'src/assets/constants/dummyBoolean';
   styleUrl: './insight-page.component.scss'
 })
 export class InsightPageComponent {
-  public review: FormControl<string | null> = new FormControl("The item arrived before I expected, but unfortunately the manual wasn't included in the box.");
+  public review: FormControl<string | null> = new FormControl("I think it's overpriced, given the flimsy feeling of the materials. Delivery was on time, though.");
   public reviewOutput: ReviewOutput | null = null
   public aspectSentimentChart!: Partial<profitExpanceChart> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;

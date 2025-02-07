@@ -8,6 +8,7 @@ import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/componen
 import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
 import { MaterialModule } from 'src/app/material.module';
 import { TextSummaryService, UploadReviewInterface } from 'src/app/services/text-summary.service';
+import { productCategories } from 'src/assets/constants/categoryNames';
 import IS_DUMMY from 'src/assets/constants/dummyBoolean';
 import { productNames } from 'src/assets/constants/productNames';
 import { ProductNameInterface } from 'src/assets/interface/productsInterface';
@@ -78,11 +79,7 @@ export class ReviewUploadPageComponent {
 
   public isLoading: boolean = false
 
-  public productCategories: ProductCategoryInterface[] = [
-    { value: 1, viewValue: 'Mouse' },
-    { value: 2, viewValue: 'Phone' },
-    { value: 3, viewValue: 'Laptop' },
-  ];
+  public productCategories: ProductCategoryInterface[] = productCategories;
 
   public productNames: ProductNameInterface[] = productNames
 
@@ -129,7 +126,7 @@ export class ReviewUploadPageComponent {
   }
 
   public calculateSentimentCounts(response: AnalyzedReviewsResponse): void {
-    const categories = ['price', 'quality', 'delivery', 'packaging', 'service'];
+    const categories = ['Price', 'Quality', 'Delivery', 'Packaging', 'Service'];
 
     const sentimentCounts: any = {
       positive: Array(categories.length).fill(0),
@@ -139,8 +136,9 @@ export class ReviewUploadPageComponent {
 
     response.analyzed_reviews.forEach(review => {
       categories.forEach((category, index) => {
-        const reviewItem: any = review
-        const sentiment: string = reviewItem['output'][`${category}`]?.sentiment;
+        const sentimentKey = `${category}Sentiment` as keyof AnalyzedReview; // e.g., "DeliverySentiment"
+        const sentiment: any = review[sentimentKey];
+
         if (sentiment) {
           sentimentCounts[sentiment][index]++;
         }
