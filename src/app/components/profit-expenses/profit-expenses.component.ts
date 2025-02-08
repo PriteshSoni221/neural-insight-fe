@@ -28,7 +28,7 @@ interface month {
   viewValue: string;
 }
 
-export interface profitExpanceChart {
+export interface profitExpanceChartInterface {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   dataLabels: ApexDataLabels;
@@ -53,6 +53,8 @@ export class AppProfitExpensesComponent {
 
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
 
-  @Input() profitExpanceChart!: Partial<profitExpanceChart> | any;
+  @Input() profitExpanceChart!: Partial<profitExpanceChartInterface> | any;
+
+  @Input() numOfReviews: string = "1";
 
 }

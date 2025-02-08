@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/components/profit-expenses/profit-expenses.component';
+import { AppProfitExpensesComponent, profitExpanceChartInterface } from 'src/app/components/profit-expenses/profit-expenses.component';
 import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
 import { MaterialModule } from 'src/app/material.module';
 import { TextSummaryService } from 'src/app/services/text-summary.service';
@@ -18,7 +18,7 @@ import IS_DUMMY from 'src/assets/constants/dummyBoolean';
 export class InsightPageComponent {
   public review: FormControl<string | null> = new FormControl("I think it's overpriced, given the flimsy feeling of the materials. Delivery was on time, though.");
   public reviewOutput: ReviewOutput | null = null
-  public aspectSentimentChart!: Partial<profitExpanceChart> | any
+  public aspectSentimentChart!: Partial<profitExpanceChartInterface> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
   public isLoading: boolean = false
 

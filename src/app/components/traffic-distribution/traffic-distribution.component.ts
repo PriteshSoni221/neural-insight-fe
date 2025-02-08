@@ -47,4 +47,6 @@ export class AppTrafficDistributionComponent {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
 
   @Input() trafficdistributionChart!: Partial<trafficdistributionChart> | any;
+
+  @Input() numOfReviews: string = "1";
 }

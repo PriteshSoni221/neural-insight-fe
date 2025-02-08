@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { MaterialModule } from '../../material.module';
 import {
   AppProfitExpensesComponent,
-  profitExpanceChart,
+  profitExpanceChartInterface,
 } from 'src/app/components/profit-expenses/profit-expenses.component';
 import {
   AppTrafficDistributionComponent,
@@ -68,7 +68,7 @@ interface AnalyzedReviewsResponse {
 })
 export class StarterComponent {
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
-  public aspectSentimentChart!: Partial<profitExpanceChart> | any;
+  public aspectSentimentChart!: Partial<profitExpanceChartInterface> | any;
 
   public selectedProductCategory: number;
   public selectedProductName: number;

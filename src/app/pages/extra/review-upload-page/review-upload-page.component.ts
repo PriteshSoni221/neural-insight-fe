@@ -4,7 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { AppProfitExpensesComponent, profitExpanceChart } from 'src/app/components/profit-expenses/profit-expenses.component';
+import { AppProfitExpensesComponent, profitExpanceChartInterface } from 'src/app/components/profit-expenses/profit-expenses.component';
 import { AppTrafficDistributionComponent, trafficdistributionChart } from 'src/app/components/traffic-distribution/traffic-distribution.component';
 import { MaterialModule } from 'src/app/material.module';
 import { TextSummaryService, UploadReviewInterface } from 'src/app/services/text-summary.service';
@@ -69,7 +69,7 @@ export class ReviewUploadPageComponent {
   public productName: FormControl<string | null> = new FormControl('');
   public analyzed_reviews: AnalyzedReview[] = []
   public summary: string | null = ""
-  public aspectSentimentChart!: Partial<profitExpanceChart> | any
+  public aspectSentimentChart!: Partial<profitExpanceChartInterface> | any
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
 
   public selectedProductCategory: string;

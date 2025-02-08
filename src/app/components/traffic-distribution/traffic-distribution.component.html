@@ -1,11 +1,13 @@
 <mat-card class="cardWithShadow">
     <mat-card-content class="p-24">
-        <mat-card-title>Sentiment Distribution</mat-card-title>
-                <div class="d-flex align-items-center justify-content-center">
-                    <apx-chart [series]="trafficdistributionChart.series" [labels]="trafficdistributionChart.labels"
-                    [dataLabels]="trafficdistributionChart.dataLabels" [chart]="trafficdistributionChart.chart" [legend]="trafficdistributionChart.legend"
-                    [colors]="trafficdistributionChart.colors" [stroke]="trafficdistributionChart.stroke" [tooltip]="trafficdistributionChart.tooltip"
-                    [plotOptions]="trafficdistributionChart.plotOptions" [responsive]="trafficdistributionChart.responsive"></apx-chart>
-                </div>
+        <mat-card-title [matBadge]="numOfReviews" matBadgeOverlap="false" class="d-inline">Sentiment Distribution</mat-card-title>
+        <div class="d-flex align-items-center justify-content-center">
+            <apx-chart [series]="trafficdistributionChart.series" [labels]="trafficdistributionChart.labels"
+                [dataLabels]="trafficdistributionChart.dataLabels" [chart]="trafficdistributionChart.chart"
+                [legend]="trafficdistributionChart.legend" [colors]="trafficdistributionChart.colors"
+                [stroke]="trafficdistributionChart.stroke" [tooltip]="trafficdistributionChart.tooltip"
+                [plotOptions]="trafficdistributionChart.plotOptions"
+                [responsive]="trafficdistributionChart.responsive"></apx-chart>
+        </div>
     </mat-card-content>
 </mat-card>

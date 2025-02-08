@@ -57,8 +57,10 @@
             </mat-card-content>
         </mat-card>
 
-        <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"></app-profit-expenses>
+        <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"
+            [numOfReviews]="analyzed_reviews.length.toString()"></app-profit-expenses>
 
-        <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"></app-traffic-distribution>
+        <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"
+            [numOfReviews]="analyzed_reviews.length.toString()"></app-traffic-distribution>
     </ng-container>
 </ng-template>

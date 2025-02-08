@@ -1,14 +1,15 @@
 <mat-card class="cardWithShadow">
     <mat-card-content class="p-24">
         <div class="d-flex w-100">
-            <mat-card-title>Aspect based analysis</mat-card-title>
+            <mat-card-title [matBadge]="numOfReviews" matBadgeOverlap="false">Aspect based analysis</mat-card-title>
         </div>
         <ng-container *ngIf="profitExpanceChart">
 
             <apx-chart [series]="profitExpanceChart.series" [dataLabels]="profitExpanceChart.dataLabels"
-            [chart]="profitExpanceChart.chart" [legend]="profitExpanceChart.legend" [xaxis]="profitExpanceChart.xaxis"
-            [yaxis]="profitExpanceChart.yaxis" [grid]="profitExpanceChart.grid" [stroke]="profitExpanceChart.stroke"
-            [tooltip]="profitExpanceChart.tooltip" [plotOptions]="profitExpanceChart.plotOptions"></apx-chart>
+                [chart]="profitExpanceChart.chart" [legend]="profitExpanceChart.legend"
+                [xaxis]="profitExpanceChart.xaxis" [yaxis]="profitExpanceChart.yaxis" [grid]="profitExpanceChart.grid"
+                [stroke]="profitExpanceChart.stroke" [tooltip]="profitExpanceChart.tooltip"
+                [plotOptions]="profitExpanceChart.plotOptions"></apx-chart>
         </ng-container>
-        </mat-card-content>
+    </mat-card-content>
 </mat-card>
