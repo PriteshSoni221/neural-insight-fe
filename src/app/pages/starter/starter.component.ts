@@ -70,7 +70,7 @@ export class StarterComponent {
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
   public aspectSentimentChart!: Partial<profitExpanceChart> | any;
 
-  public selectedProductCategory: string;
+  public selectedProductCategory: number;
   public selectedProductName: number;
   public analyzed_reviews: AnalyzedReview[] = []
   public summary: string | null = ""
