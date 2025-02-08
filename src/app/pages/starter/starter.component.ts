@@ -70,7 +70,7 @@ export class StarterComponent {
   public trafficdistributionChart!: Partial<trafficdistributionChart> | any;
   public aspectSentimentChart!: Partial<profitExpanceChartInterface> | any;
 
-  public selectedProductCategory: number;
+  public selectedProductCategory: string | null = null;
   public selectedProductName: number;
   public analyzed_reviews: AnalyzedReview[] = []
   public summary: string | null = ""
@@ -84,14 +84,18 @@ export class StarterComponent {
 
   private IS_DUMMY: boolean = IS_DUMMY
 
+  public productCategories: ProductCategoryInterface[] = productCategories;
+
+  public productNames: ProductNameInterface[] = productNames
+
   constructor(private textSummaryService: TextSummaryService) {
     this.loadDistributionChart();
     this.loadChart();
   }
 
-  public productCategories: ProductCategoryInterface[] = productCategories;
-
-  public productNames: ProductNameInterface[] = productNames
+  public updateProductNames() {
+    this.productNames = productNames.filter((product) => product.category === this.selectedProductCategory);
+  }
 
   public onSubmit(): void {
 

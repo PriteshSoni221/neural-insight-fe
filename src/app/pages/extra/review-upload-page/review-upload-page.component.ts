@@ -14,7 +14,7 @@ import { productNames } from 'src/assets/constants/productNames';
 import { ProductNameInterface } from 'src/assets/interface/productsInterface';
 
 export interface ProductCategoryInterface {
-  value: number;
+  // value: number;
   viewValue: string;
 }
 
@@ -81,7 +81,7 @@ export class ReviewUploadPageComponent {
 
   public productCategories: ProductCategoryInterface[] = productCategories;
 
-  public productNames: ProductNameInterface[] = productNames
+  public productNames: ProductNameInterface[] = productNames;
 
   private IS_DUMMY: boolean = IS_DUMMY
   
@@ -92,6 +92,10 @@ export class ReviewUploadPageComponent {
   }
 
   constructor(private textSummaryService: TextSummaryService) { }
+
+  public updateProductNames() {
+    this.productNames = productNames.filter((product) => product.category === this.selectedProductCategory);
+  }
 
   public onUpload(): void {
 

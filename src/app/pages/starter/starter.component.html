@@ -12,16 +12,16 @@
   <mat-card-content class="review-text-textarea-container b-t-1">
     <mat-form-field appearance="outline" class="h-100 w-100">
       <mat-label>Product category</mat-label>
-      <mat-select [(ngModel)]="selectedProductCategory" name="food">
+      <mat-select [(ngModel)]="selectedProductCategory" (ngModelChange)="updateProductNames()">
         @for (category of productCategories; track category) {
-        <mat-option [value]="category.value">{{category.viewValue}}</mat-option>
+        <mat-option [value]="category.viewValue">{{category.viewValue}}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="h-100 w-100">
       <mat-label>Product name</mat-label>
-      <mat-select [(ngModel)]="selectedProductName" name="food">
+      <mat-select [(ngModel)]="selectedProductName">
         @for (name of productNames; track name) {
         <mat-option [value]="name.productId">{{name.viewValue}}</mat-option>
         }
@@ -50,7 +50,7 @@
 
     <mat-card class="cardWithShadow">
       <mat-card-content class="b-t-1 p-t-0">
-        <mat-card-title class="title">Summary</mat-card-title>
+        <mat-card-title class="title p-y-16">Summary</mat-card-title>
         <ng-container *ngIf="summary">
           <div>{{summary}}</div>
         </ng-container>
