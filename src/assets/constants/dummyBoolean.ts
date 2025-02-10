@@ -1,2 +1,2 @@
-const IS_DUMMY = false;
+const IS_DUMMY = true;
 export default IS_DUMMY;
