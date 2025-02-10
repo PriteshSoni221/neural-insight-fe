@@ -1,0 +1,4 @@
+# Normalize text files to use LF
+* text=auto
+*.sh text eol=lf
+*.bat text eol=crlf

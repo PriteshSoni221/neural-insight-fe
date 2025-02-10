@@ -1,0 +1,277 @@
+[
+  {
+    "input": "The item arrived before I expected, but unfortunately the manual wasn't included in the box.",
+    "output": {
+      "delivery": {
+        "text": "The item arrived before I expected",
+        "sentiment": "positive"
+      },
+      "quality": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "price": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "packaging": {
+        "text": "the manual wasn't included in the box",
+        "sentiment": "negative"
+      },
+      "service": {
+        "text": "",
+        "sentiment": "neutral"
+      }
+    }
+  },
+  {
+    "input": "Great value for the money. The packaging was secure, and everything works just fine.",
+    "output": {
+      "delivery": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "quality": {
+        "text": "everything works just fine",
+        "sentiment": "positive"
+      },
+      "price": {
+        "text": "Great value for the money",
+        "sentiment": "positive"
+      },
+      "packaging": {
+        "text": "The packaging was secure",
+        "sentiment": "positive"
+      },
+      "service": {
+        "text": "",
+        "sentiment": "neutral"
+      }
+    }
+  },
+  {
+    "input": "I think it's overpriced, given the flimsy feeling of the materials. Delivery was on time, though.",
+    "output": {
+      "delivery": {
+        "text": "Delivery was on time",
+        "sentiment": "positive"
+      },
+      "quality": {
+        "text": "flimsy feeling of the materials",
+        "sentiment": "negative"
+      },
+      "price": {
+        "text": "it's overpriced",
+        "sentiment": "negative"
+      },
+      "packaging": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "service": {
+        "text": "",
+        "sentiment": "neutral"
+      }
+    }
+  },
+  {
+    "input": "Customer service was very friendly when I called. The product is decent for a budget option.",
+    "output": {
+      "delivery": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "quality": {
+        "text": "The product is decent",
+        "sentiment": "positive"
+      },
+      "price": {
+        "text": "for a budget option",
+        "sentiment": "positive"
+      },
+      "packaging": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "service": {
+        "text": "Customer service was very friendly",
+        "sentiment": "positive"
+      }
+    }
+  },
+  {
+    "input": "The device didn't come with the accessory kit mentioned online, but the box was sealed properly.",
+    "output": {
+      "delivery": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "quality": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "price": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "packaging": {
+        "text": "the box was sealed properly",
+        "sentiment": "positive"
+      },
+      "service": {
+        "text": "The device didn't come with the accessory kit mentioned online",
+        "sentiment": "negative"
+      }
+    }
+  },
+  {
+    "input": "Got it on sale, so the price is fantastic. The user manual, however, is confusing.",
+    "output": {
+      "delivery": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "quality": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "price": {
+        "text": "Got it on sale, so the price is fantastic",
+        "sentiment": "positive"
+      },
+      "packaging": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "service": {
+        "text": "the user manual is confusing",
+        "sentiment": "negative"
+      }
+    }
+  },
+  {
+    "input": "Fast shipping, arrived in two days. The device itself meets my expectations for the cost.",
+    "output": {
+      "delivery": {
+        "text": "Fast shipping, arrived in two days",
+        "sentiment": "positive"
+      },
+      "quality": {
+        "text": "The device itself meets my expectations",
+        "sentiment": "positive"
+      },
+      "price": {
+        "text": "for the cost",
+        "sentiment": "positive"
+      },
+      "packaging": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "service": {
+        "text": "",
+        "sentiment": "neutral"
+      }
+    }
+  },
+  {
+    "input": "Packaging was drenched from the rain, but the product was somehow fine. Might need waterproof packaging next time.",
+    "output": {
+      "delivery": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "quality": {
+        "text": "the product was somehow fine",
+        "sentiment": "positive"
+      },
+      "price": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "packaging": {
+        "text": "Packaging was drenched from the rain",
+        "sentiment": "negative"
+      },
+      "service": {
+        "text": "Might need waterproof packaging next time",
+        "sentiment": "neutral"
+      }
+    }
+  },
+  {
+    "input": "Very good quality overall, but I wasn't impressed with how the courier handled the box.",
+    "output": {
+      "delivery": {
+        "text": "how the courier handled the box",
+        "sentiment": "negative"
+      },
+      "quality": {
+        "text": "Very good quality overall",
+        "sentiment": "positive"
+      },
+      "price": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "packaging": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "service": {
+        "text": "",
+        "sentiment": "neutral"
+      }
+    }
+  },
+  {
+    "input": "Arrived in a huge box with plenty of padding. Product itself seems sturdy and well-made for the price.",
+    "output": {
+      "delivery": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "quality": {
+        "text": "Product itself seems sturdy and well-made",
+        "sentiment": "positive"
+      },
+      "price": {
+        "text": "for the price",
+        "sentiment": "positive"
+      },
+      "packaging": {
+        "text": "Arrived in a huge box with plenty of padding",
+        "sentiment": "positive"
+      },
+      "service": {
+        "text": "",
+        "sentiment": "neutral"
+      }
+    }
+  },
+  {
+    "input": "The instructions were missing some crucial steps. Otherwise, the product works as intended.",
+    "output": {
+      "delivery": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "quality": {
+        "text": "the product works as intended",
+        "sentiment": "positive"
+      },
+      "price": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "packaging": {
+        "text": "",
+        "sentiment": "neutral"
+      },
+      "service": {
+        "text": "The instructions were missing some crucial steps",
+        "sentiment": "negative"
+      }
+    }
+  }
+]

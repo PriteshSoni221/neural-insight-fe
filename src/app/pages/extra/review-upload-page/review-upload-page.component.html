@@ -1,0 +1,66 @@
+<mat-card class="cardWithShadow">
+    <mat-card-content class="b-t-1">
+        <mat-card-title class="title">Upload reviews</mat-card-title>
+    </mat-card-content>
+
+    <mat-card-content class="review-text-textarea-container b-t-1">
+
+        <mat-form-field appearance="outline" class="h-100 w-100">
+            <mat-label>Product category</mat-label>
+            <mat-select [(ngModel)]="selectedProductCategory" (ngModelChange)="updateProductNames()">
+                @for (category of productCategories; track category) {
+                <mat-option [value]="category.viewValue">{{category.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="h-100 w-100">
+            <mat-label>Product name</mat-label>
+            <mat-select [(ngModel)]="selectedProductId">
+                @for (name of productNames; track name) {
+                <mat-option [value]="name.productId">{{name.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <div class="file-upload-input">
+            <input type="file" (change)="onFileUpload($event)" accept=".json" />
+        </div>
+
+        <button mat-flat-button color="primary" matTooltip="Get analytics of your text" (click)="onUpload()"
+            [disabled]="isLoading">
+            Upload
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<ng-container *ngIf="isLoading; else notLoading">
+    <mat-card class="cardWithShadow">
+        <mat-card-content>
+            <div class="row justify-content-center">
+                <mat-spinner class="spinner"></mat-spinner>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</ng-container>
+
+
+<ng-template #notLoading>
+    <ng-container *ngIf="analyzed_reviews.length > 0">
+
+        <mat-card class="cardWithShadow">
+            <mat-card-content class="b-t-1 p-t-0">
+                <mat-card-title class="title">Summary</mat-card-title>
+                <ng-container *ngIf="summary">
+                    <div>{{summary}}</div>
+                </ng-container>
+            </mat-card-content>
+        </mat-card>
+
+        <app-profit-expenses [profitExpanceChart]="aspectSentimentChart"
+            [numOfReviews]="analyzed_reviews.length.toString()"></app-profit-expenses>
+
+        <app-traffic-distribution [trafficdistributionChart]="trafficdistributionChart"
+            [numOfReviews]="analyzed_reviews.length.toString()"></app-traffic-distribution>
+    </ng-container>
+</ng-template>

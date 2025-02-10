@@ -1,0 +1,35 @@
+import { ProductNameInterface } from "../interface/productsInterface";
+
+
+export const productNames: ProductNameInterface[] = [
+    { productId: 34942640, category: "Smartwatch", viewValue: "Fitbit Versa 3" },
+    { productId: 51705074, category: "Monitor", viewValue: "LG 27GN950-B" },
+    { productId: 20787705, category: "Headphones", viewValue: "Sony WH-1000XM4" },
+    { productId: 97658498, category: "Camera", viewValue: "Fujifilm X-T4" },
+    { productId: 40692064, category: "Keyboard", viewValue: "Razer BlackWidow V3" },
+    { productId: 50301052, category: "Smartwatch", viewValue: "Amazfit GTR 3" },
+    { productId: 70835626, category: "Keyboard", viewValue: "Corsair K95 RGB Platinum" },
+    { productId: 84796813, category: "Headphones", viewValue: "Bose QuietComfort 45" },
+    { productId: 97791773, category: "Camera", viewValue: "Nikon Z6 II" },
+    { productId: 22316707, category: "Smartwatch", viewValue: "Apple Watch Series 7" },
+    { productId: 70348828, category: "Headphones", viewValue: "JBL Tune 750BTNC" },
+    { productId: 12627416, category: "Keyboard", viewValue: "SteelSeries Apex Pro" },
+    { productId: 33955043, category: "Monitor", viewValue: "Dell UltraSharp U2723QE" },
+    { productId: 77143925, category: "Headphones", viewValue: "Sennheiser HD 450BT" },
+    { productId: 40299460, category: "Headphones", viewValue: "Anker Soundcore Q20" },
+    { productId: 84766610, category: "Camera", viewValue: "Canon EOS R5" },
+    { productId: 68226268, category: "Monitor", viewValue: "Samsung Odyssey G7" },
+    { productId: 25988957, category: "Camera", viewValue: "Sony Alpha a7 III" },
+    { productId: 95183506, category: "Monitor", viewValue: "ASUS ProArt Display PA32UCX" },
+    { productId: 21072914, category: "Camera", viewValue: "Panasonic Lumix S5" },
+    { productId: 71365717, category: "Smartwatch", viewValue: "Garmin Forerunner 245" },
+    { productId: 61151397, category: "Keyboard", viewValue: "Logitech MX Keys" },
+    { productId: 33571872, category: "Keyboard", viewValue: "Keychron K2" },
+    { productId: 35989555, category: "Monitor", viewValue: "BenQ PD3220U" },
+    { productId: 20832394, category: "Smartwatch", viewValue: "Samsung Galaxy Watch 4" },
+    { productId: 55516604, category: "Keyboard", viewValue: "Razer BlackWidow V3" },
+    { productId: 89954395, category: "Smartwatch", viewValue: "Amazfit GTR 3" },
+    { productId: 76296678, category: "Keyboard", viewValue: "Corsair K95 RGB Platinum" },
+    { productId: 48188718, category: "Headphones", viewValue: "Bose QuietComfort 45" },
+    { productId: 17458006, category: "Camera", viewValue: "Nikon Z6 II" }
+];
